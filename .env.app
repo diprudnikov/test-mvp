@@ -1,0 +1,14 @@
+DB_PASSWORD=mysecretpassword
+DB_USERNAME=postgres
+DB_DATABASE=mvp-db
+DB_SCHEMA=mvp
+DB_HOST=db
+DB_PORT=5432
+DB_TYPE=postgres
+DB_SYNCHRONIZE=true
+
+
+JWT_SECRET_KEY=secretkey
+
+API_VERSION=v1
+APIDOC_URL=_apidoc_v1

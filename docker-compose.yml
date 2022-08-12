@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+
+  dev-server:
+    container_name: mvp-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: npm run ${MODE_RUNNING}
+    privileged: true
+    env_file:
+      - .env.app
+    tty: true
+    volumes:
+      - ./:/app
+    ports:
+      - ${PORT}:${PORT}
+      - 9225:9229
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - HOST=${HOST}
+    extra_hosts:
+      - dev-server:${HOST_IP}
+
+  db:
+    image: postgres:14
+    container_name: mvp-db
+    restart: always
+    logging:
+      driver: none
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - ./postgre/pg_data:/var/lib/postgresql/data
+      - ./postgre/sql:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_NAME}
